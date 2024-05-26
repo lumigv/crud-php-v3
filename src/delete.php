@@ -13,21 +13,8 @@ $id = $_GET['id'];
 
 //Prepara una sentencia SQL para su ejecución. En este caso el borrado de un registro de la BD.
 
-$result = mysqli_query($mysqli, "DELETE FROM users WHERE id = $id");
+$result = mysqli_query($mysqli, "DELETE FROM producto WHERE id = $id");
 
-
-//$stmt = mysqli_prepare($mysqli, "DELETE FROM users WHERE id=?");
-/*Enlaza variables como parámetros a una setencia preparada. 
-i: La variable correspondiente tiene tipo entero
-d: La variable correspondiente tiene tipo doble
-s:	La variable correspondiente tiene tipo cadena
-*/
-//mysqli_stmt_bind_param($stmt, "i", $id);
-//Ejecuta una consulta preparada
-//mysqli_stmt_execute($stmt);
-//Cierra la sentencia preparada
-//mysqli_stmt_close($stmt);
-//Cierra la conexión de base de datos previamente abierta
 mysqli_close($mysqli);
 //Redirige a la página principal: index.php
 header("Location:index.php");

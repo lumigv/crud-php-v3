@@ -9,22 +9,22 @@ Transacción de datos utilizando el método: POST
 if(isset($_POST['modifica'])) {
 	$id = mysqli_real_escape_string($mysqli, $_POST['id']);
 	$name = mysqli_real_escape_string($mysqli, $_POST['name']);
-	$surname = mysqli_real_escape_string($mysqli, $_POST['surname']);
-	$age = mysqli_real_escape_string($mysqli, $_POST['age']);
+	$price = mysqli_real_escape_string($mysqli, $_POST['price']);
+	$code = mysqli_real_escape_string($mysqli, $_POST['code']);
 
 	echo "Bloque1\n";
 
-	if(empty($name) || empty($surname) || empty($age))	{
+	if(empty($name) || empty($price) || empty($code))	{
 		if(empty($name)) {
 			echo "<font color='red'>Campo nombre vacío.</font><br/>";
 		}
 
-		if(empty($surname)) {
+		if(empty($price)) {
 			echo "<font color='red'>Campo apellido vacío.</font><br/>";
 		}
 
-		if(empty($age)) {
-			echo "<font color='red'>Campo edad vacío.</font><br/>";
+		if(empty($code)) {
+			echo "<font color='red'>Campo Fabricante vacío.</font><br/>";
 		}
 	} //fin si
 	else 
@@ -33,24 +33,10 @@ if(isset($_POST['modifica'])) {
 
 echo "Bloque2\n";
 
-$result = mysqli_query($mysqli, "UPDATE users SET name = '$name', surname = '$surname',  age = '$age' WHERE `id` = $id");
+$result = mysqli_query($mysqli, "UPDATE producto SET nombre = '$name', precio = '$price',  id_fabricante = '$code' WHERE `id` = $id");
 mysqli_close($mysqli);
 
 echo "Bloque3\n";
-//$stmt = mysqli_prepare($mysqli, "UPDATE users SET name=?,surname=?,age=? WHERE id=?");
-/*Enlaza variables como parámetros a una setencia preparada. 
-i: La variable correspondiente tiene tipo entero
-d: La variable correspondiente tiene tipo doble
-s:	La variable correspondiente tiene tipo cadena
-*/				
-//		mysqli_stmt_bind_param($stmt, "ssii", $name, $surname, $age, $id);
-//Ejecuta una consulta preparada			
-//		mysqli_stmt_execute($stmt);
-//Libera la memoria donde se almacenó el resultado
-//		mysqli_stmt_free_result($stmt);
-//Cierra la sentencia preparada		
-//		mysqli_stmt_close($stmt);
-
 		header("Location: index.php");
 	}// fin sino
 }//fin si
@@ -59,33 +45,21 @@ s:	La variable correspondiente tiene tipo cadena
 
 <?php
 /*Obtiene el id del dato a modificar a partir de la URL. Transacción de datos utilizando el método: GET*/
+echo "Estamos en el Get\n";
 $id = $_GET['id'];
 
 $id = mysqli_real_escape_string($mysqli, $id);
 
-$result = mysqli_query($mysqli, "SELECT name, surname, age FROM users WHERE id = $id");
-$resultData = mysqli_fetch_assoc($result);
-$name = $resultData['name'];
-$surname = $resultData['surname'];
-$age = $resultData['age'];
+$result = mysqli_query($mysqli, "SELECT nombre, precio, id_fabricante FROM producto WHERE id = '$id'");
+$row1 = mysqli_fetch_assoc($result);
+$name = $row1['nombre'];
+echo $name."\n";
+$price = $row1['precio'];
+echo $price."\n";
+$code = $row1['id_fabricante'];
+echo $code."\n";
 
 
-//Prepara una sentencia SQL para su ejecución. En este caso selecciona el registro a modificar y lo muestra en el formulario.				
-//$stmt = mysqli_prepare($mysqli, "SELECT name, surname, age FROM users WHERE id=?");
-//Enlaza variables como parámetros a una setencia preparada. 
-//mysqli_stmt_bind_param($stmt, "i", $id);
-//Ejecuta una consulta preparada
-//mysqli_stmt_execute($stmt);
-//Enlaza variables a una setencia preparada para el almacenamiento del resultado
-//mysqli_stmt_bind_result($stmt, $name, $surname, $age);
-//Obtiene el resultado de una sentencia SQL preparada en las variables enlazadas
-//mysqli_stmt_fetch($stmt);
-//Libera la memoria donde se almacenó el resultado		
-//mysqli_stmt_free_result($stmt);
-//Cierra la sentencia preparada
-//mysqli_stmt_close($stmt);
-//Cierra la conexión de base de datos previamente abierta
-mysqli_close($mysqli);
 ?>
 
 <!DOCTYPE html>
@@ -93,7 +67,7 @@ mysqli_close($mysqli);
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">	
-	<title>Modificación trabajador/a</title>
+	<title>Modificación producto</title>
 <!--	
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 -->
@@ -111,9 +85,9 @@ mysqli_close($mysqli);
 	<main>				
 	<ul>
 		<li><a href="index.php" >Inicio</a></li>
-		<li><a href="add.html" >Alta</a></li>
+		<li><a href="add.php" >Alta</a></li>
 	</ul>
-	<h2>Modificación trabajador/a</h2>
+	<h2>Modificación producto</h2>
 <!--Formulario de edición. 
 Al hacer click en el botón Guardar, llama a esta misma página: edit.php-->
 	<form action="edit.php" method="post">
@@ -123,13 +97,27 @@ Al hacer click en el botón Guardar, llama a esta misma página: edit.php-->
 		</div>
 
 		<div>
-			<label for="surname">Apellido</label>
-			<input type="text" name="surname" id="surname" value="<?php echo $surname;?>" required>
+			<label for="price">Precio</label>
+			<input type="number" name="price" id="price" step="0.01" value="<?php echo $price;?>" required>
 		</div>
 
 		<div>
-			<label for="age">Edad</label>
-			<input type="number" name="age" id="age" value="<?php echo $age;?>" required>
+			<label for="code">Fabricante</label>
+			<!--<input type="number" name="code" id="code" value="<?php echo $code;?>" required>-->
+			<?php
+	 			$result = mysqli_query($mysqli, "select id, nombre from fabricante ORDER BY id DESC");		
+			?>	
+      		<select name="code" id="code" placeholder="fabricante" required>
+       		 	<?php   //Cargar los niveles en el combo
+        		while($row = mysqli_fetch_array($result)) {
+					echo $code."\n";
+					echo $row['id'].$row['nombre']."\n";
+					if ($code==$row['id'])
+                    	printf("<option selected value=%s>%s</option>",$row['id'],$row['nombre']);
+                        else
+                     	printf("<option value=%s>%s</option>",$row['id'],$row['nombre']);
+          		}?>
+       		</select>
 		</div>
 
 		<div >

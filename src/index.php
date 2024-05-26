@@ -9,8 +9,11 @@ DB_PASSWORD: Contraseña del usuario e la BD
 include_once("config.php");
 
 //Consulta de selección. Selecciona todos los usuarios ordenados de manera descendente por el campo id
-$result = mysqli_query($mysqli, "SELECT * FROM users ORDER BY id DESC");
 
+
+//$result = mysqli_query($mysqli, "SELECT * FROM producto ORDER BY id DESC");
+$result = mysqli_query($mysqli, "select a.id id, a.nombre nombre, a.precio precio, b.nombre fabricante
+from producto a, fabricante b where a.id_fabricante=b.id ORDER BY id DESC");
 ?>
 
 <!DOCTYPE html>
@@ -38,15 +41,15 @@ $result = mysqli_query($mysqli, "SELECT * FROM users ORDER BY id DESC");
 	<main>
 	<ul>
 		<li><a href="index.php">Inicio</a></li>
-		<li><a href="add.html">Alta</a></li>
+		<li><a href="add.php">Alta</a></li>
 	</ul>
-	<h2>Listado de trabajador@s</h2>
+	<h2>Listado de productos</h2>
 	<table border="1">
 	<thead>
 		<tr>
 			<th>Nombre</th>
-			<th>Apellido</th>
-			<th>Edad</th>
+			<th>Precio</th>
+			<th>Fabricante</th>
 			<th>Acciones</th>
 		</tr>
 	</thead>
@@ -61,15 +64,15 @@ $productos[2] = "Monitor";
 ARRAYS ASOCIATIVO:
 $res["id"] = "7";
 $res["name"] = "Pedro";
-$res["surname"] = "Zapata";
-$res["age"] = "23";
+$res["price"] = "Zapata";
+$res["code"] = "23";
 */
 //Genera la tabla de la página inicial
 	while($res = mysqli_fetch_array($result)) {
 		echo "<tr>\n";
-		echo "<td>".$res['name']."</td>\n";
-		echo "<td>".$res['surname']."</td>\n";
-		echo "<td>".$res['age']."</td>\n";
+		echo "<td>".$res['nombre']."</td>\n";
+		echo "<td>".$res['precio']."</td>\n";
+		echo "<td>".$res['fabricante']."</td>\n";
 		echo "<td>";
 //En la última columna se añader dos enlaces para editar y modificar el registro correspondiente. Se le pasa por el método GET el id del registro		
 		echo "<a href=\"edit.php?id=$res[id]\">Editar</a>\n";
