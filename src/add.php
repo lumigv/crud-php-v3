@@ -122,6 +122,7 @@ Al hacer click en el botón Agregar, llama a la página: add.php-->
 			//Seleccionamos el tipo de hardware a través de un botón de opción
 			/*foreach ($tipos as $key=>$value)
 			{
+				//echo("<input type='radio' name='boton' value='$value'>");
 				printf("<input type=\"radio\" name=\"type\" value=\"%s\" id=\"%s\">",$key, $key);
 				printf("<label for=\"%s\">%s</label>",$key,$value);
 			}*/
@@ -131,7 +132,7 @@ Al hacer click en el botón Agregar, llama a la página: add.php-->
 			<select name="type" id="type" placeholder="tipo" required>
         	<option value="">Tipo</option>
              <?php //Cargar los niveles en el combo
-        		foreach ($tipos as $key=>$value) {
+	       		foreach ($tipos as $key=>$value) {
                	   printf("<option value=%s>%s</option>",$key,$value);
           		}?>
        		</select>

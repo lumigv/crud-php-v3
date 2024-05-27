@@ -141,9 +141,13 @@ Al hacer click en el botón Guardar, llama a esta misma página: edit.php-->
 			foreach ($tipos as $key=>$value)
 			{
 				if ($type==$key)
-					printf("<input type=\"radio\" name=\"type\" value=\"%s\" id=\"%s\" checked>",$key, $key);
+					//echo "hola\n";
+				    echo("<input type='radio' name='type' value='$key' id='$key' checked>");
+					//printf("<input type=\"radio\" name=\"type\" value=\"%s\" id=\"%s\" checked>",$key, $key);
 				else
-					printf("<input type=\"radio\" name=\"type\" value=\"%s\" id=\"%s\">",$key, $key);
+					//echo "hola2\n";
+				    echo("<input type='radio' name='type' value='$key' id='$key' checked>");
+					//printf("<input type=\"radio\" name=\"type\" value=\"%s\" id=\"%s\">",$key, $key);
 				printf("<label for=\"%s\">%s</label>",$key,$value);
 			}
 			//Seleccionamos el tipo de hardware a través de una lista desplegable
