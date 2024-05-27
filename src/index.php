@@ -56,18 +56,6 @@ from producto a, fabricante b where a.id_fabricante=b.id ORDER BY nombre ASC");
 	</thead>
 	<tbdody>
 <?php
-/*mysqli_fetch_array- Busca una fila de una consulta y devuelve un array asociativo
-ARRAYS CON ÍNDICE
-$productos = array();
-$productos[0] = "Disco SSD";
-$productos[1] = "Memoria RAM";
-$productos[2] = "Monitor";
-ARRAYS ASOCIATIVO:
-$res["id"] = "7";
-$res["name"] = "Pedro";
-$res["price"] = "Zapata";
-$res["code"] = "23";
-*/
 //Genera la tabla de la página inicial
 	while($res = mysqli_fetch_array($result)) {
 		echo "<tr>\n";

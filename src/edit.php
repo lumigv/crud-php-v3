@@ -10,17 +10,22 @@ if(isset($_POST['modifica'])) {
 	$id = mysqli_real_escape_string($mysqli, $_POST['id']);
 	$name = mysqli_real_escape_string($mysqli, $_POST['name']);
 	$price = mysqli_real_escape_string($mysqli, $_POST['price']);
+	$type = mysqli_real_escape_string($mysqli, $_POST['type']);
 	$code = mysqli_real_escape_string($mysqli, $_POST['code']);
 
 	echo "Bloque1\n";
 
-	if(empty($name) || empty($price) || empty($code))	{
+	if(empty($name) || empty($price) || empty($type) || empty($code))	{
 		if(empty($name)) {
 			echo "<font color='red'>Campo nombre vacío.</font><br/>";
 		}
 
 		if(empty($price)) {
-			echo "<font color='red'>Campo apellido vacío.</font><br/>";
+			echo "<font color='red'>Campo precio vacío.</font><br/>";
+		}
+
+		if(empty($type)) {
+			echo "<font color='red'>Campo tipo vacío.</font><br/>";
 		}
 
 		if(empty($code)) {
@@ -33,7 +38,7 @@ if(isset($_POST['modifica'])) {
 
 echo "Bloque2\n";
 
-$result = mysqli_query($mysqli, "UPDATE producto SET nombre = '$name', precio = '$price',  id_fabricante = '$code' WHERE `id` = $id");
+$result = mysqli_query($mysqli, "UPDATE producto SET nombre = '$name', precio = '$price',  tipo = '$type', id_fabricante = '$code' WHERE `id` = $id");
 mysqli_close($mysqli);
 
 echo "Bloque3\n";
@@ -50,12 +55,14 @@ $id = $_GET['id'];
 
 $id = mysqli_real_escape_string($mysqli, $id);
 
-$result = mysqli_query($mysqli, "SELECT nombre, precio, id_fabricante FROM producto WHERE id = '$id'");
+$result = mysqli_query($mysqli, "SELECT nombre, precio, tipo, id_fabricante FROM producto WHERE id = '$id'");
 $row1 = mysqli_fetch_assoc($result);
 $name = $row1['nombre'];
 echo $name."\n";
 $price = $row1['precio'];
 echo $price."\n";
+$type = $row1['tipo'];
+echo $type."\n";
 $code = $row1['id_fabricante'];
 echo $code."\n";
 
@@ -91,17 +98,17 @@ echo $code."\n";
 <!--Formulario de edición. 
 Al hacer click en el botón Guardar, llama a esta misma página: edit.php-->
 	<form action="edit.php" method="post">
-		<div>
+		<div><p>
 			<label for="name">Nombre</label>
 			<input type="text" name="name" id="name" value="<?php echo $name;?>" required>
-		</div>
+		</p></div>
 
-		<div>
+		<div><p>
 			<label for="price">Precio</label>
 			<input type="number" name="price" id="price" step="0.01" value="<?php echo $price;?>" required>
-		</div>
+		</p></div>
 
-		<div>
+		<div><p>
 			<label for="code">Fabricante</label>
 			<!--<input type="number" name="code" id="code" value="<?php echo $code;?>" required>-->
 			<?php
@@ -118,8 +125,42 @@ Al hacer click en el botón Guardar, llama a esta misma página: edit.php-->
                      	printf("<option value=%s>%s</option>",$row['id'],$row['nombre']);
           		}?>
        		</select>
-		</div>
+		</p></div>
 
+		<div><p>
+			<?php 
+			
+			$tipos = [	"ALM"=>"Almacenamiento",
+			"ENT"=>"Entrada",
+			"EQU"=>"Equipo",
+			"E/S"=>"Entrada/Salida",
+			"PRO"=>"Procesamiento",
+			"SAL"=>"Salida"
+			];
+			//Seleccionamos el tipo de hardware a través de un botón de opción
+			foreach ($tipos as $key=>$value)
+			{
+				if ($type==$key)
+					printf("<input type=\"radio\" name=\"type\" value=\"%s\" id=\"%s\" checked>",$key, $key);
+				else
+					printf("<input type=\"radio\" name=\"type\" value=\"%s\" id=\"%s\">",$key, $key);
+				printf("<label for=\"%s\">%s</label>",$key,$value);
+			}
+			//Seleccionamos el tipo de hardware a través de una lista desplegable
+			?>
+			<!--Seleccionamos el hardware a través de una lista desplegable-->
+			<!--<label for="type">Tipo</label>
+			<select name="type" id="type" placeholder="tipo" required>
+        	<option value="">Tipo</option>-->
+             <?php //Cargar los niveles en el combo
+        		/*foreach ($tipos as $key=>$value) {
+					if ($type==$key)
+                    	printf("<option selected value=%s>%s</option>",$key,$value);
+                        else
+                     	printf("<option value=%s>%s</option>",$key,$value);
+          		} */?>
+       		<!--</select>-->
+		<p></div>
 		<div >
 			<input type="hidden" name="id" value=<?php echo $id;?>>
 			<input type="submit" name="modifica" value="Guardar">

@@ -1,6 +1,12 @@
 <?php
+echo "principio\n";
 //Incluye fichero con parámetros de conexión a la base de datos
+
+echo "Antes include once\n";
+
 include_once("config.php");
+
+echo "Despues include once\n";
 
 echo "Bloque1\n";
 
@@ -12,20 +18,25 @@ if(isset($_POST['inserta']))
 	$name = mysqli_real_escape_string($mysqli, $_POST['name']);
 	$price = mysqli_real_escape_string($mysqli, $_POST['price']);
 	$code = mysqli_real_escape_string($mysqli, $_POST['code']);
+	$type = mysqli_real_escape_string($mysqli, $_POST['type']);
 
 	echo "Bloque2\n";	
-	if(empty($name) || empty($code) || empty($price)) 
+	if(empty($name) || empty($code) || empty($price) || empty($type)) 
 	{
 		if(empty($name)) {
 			echo "<div>Campo nombre vacío.</div>";
 		}
 
 		if(empty($price)) {
-			echo "<div>Campo apellido vacío</div>";
+			echo "<div>Campo precio vacío</div>";
 		}
 
 		if(empty($code)) {
 			echo "<div>Campo Fabricante vacío.</div>";
+		}
+
+		if(empty($type)) {
+			echo "<div>Campo tipo vacío.</div>";
 		}
 //Enlace a la página anterior
 		echo "<a href='javascript:self.history.back();'>Volver atras</a>";
@@ -33,7 +44,7 @@ if(isset($_POST['inserta']))
 	else 
 	{
 //Prepara una sentencia SQL para su ejecución. En este caso el alta de un registro de la BD.	
-		$result = mysqli_query($mysqli, "INSERT INTO producto (nombre, precio, id_fabricante) VALUES ('$name', '$price', '$code')");	
+		$result = mysqli_query($mysqli, "INSERT INTO producto (nombre, precio, tipo, id_fabricante) VALUES ('$name', '$price', '$type','$code')");	
 	
 		echo "Bloque3\n";
 		echo "<div>Datos añadidos correctamente</div>";
@@ -73,18 +84,18 @@ if(isset($_POST['inserta']))
 <!--Formulario de alta. 
 Al hacer click en el botón Agregar, llama a la página: add.php-->
 	<form action="add.php" method="post">
-		<div>
-			<label for="name">Nombrecito</label>
+		<div><p>
+			<label for="name">Nombre</label>
 			<!--placeholder es como una pista del valor a introducir-->
 			<input type="text" name="name" id="name" placeholder="nombre" required>
-		</div>
+		</p></div>
 
-		<div>
+		<div><p>
 			<label for="price">Precio</label>
 			<input type="number" name="price" step="0.01" id="price" placeholder="precio" required>
-		</div>
+		</p><div>
 
-		<div>
+		<div><p>
 			<label for="code">Fabricante</label>
 			<!--<input type="number" name="code" id="code" placeholder="fabricante" required>-->
 			<?php 
@@ -97,7 +108,40 @@ Al hacer click en el botón Agregar, llama a la página: add.php-->
                	   printf("<option value=%s>%s</option>",$row['id'],$row['nombre']);
           		}?>
        		</select>
-		</div>
+		</p></div>
+		<div><p>
+			<?php 
+			
+			$tipos = [	"ALM"=>"Almacenamiento",
+			"ENT"=>"Entrada",
+			"EQU"=>"Equipo",
+			"E/S"=>"Entrada/Salida",
+			"PRO"=>"Procesamiento",
+			"SAL"=>"Salida"
+			];
+			//Seleccionamos el tipo de hardware a través de un botón de opción
+			/*foreach ($tipos as $key=>$value)
+			{
+				printf("<input type=\"radio\" name=\"type\" value=\"%s\" id=\"%s\">",$key, $key);
+				printf("<label for=\"%s\">%s</label>",$key,$value);
+			}*/
+			//Seleccionamos el tipo de hardware a través de una lista desplegable
+			?>
+			<label for="type">Tipo</label>
+			<select name="type" id="type" placeholder="tipo" required>
+        	<option value="">Tipo</option>
+             <?php //Cargar los niveles en el combo
+        		foreach ($tipos as $key=>$value) {
+               	   printf("<option value=%s>%s</option>",$key,$value);
+          		}?>
+       		</select>
+
+
+			
+
+		
+
+		</p></div>
 		<div>
 			<input type="submit" name="inserta" value="Agregar">
 			<input type="button" value="Cancelar" onclick="location.href='index.php'">
