@@ -12,8 +12,8 @@ include_once("config.php");
 
 
 //$result = mysqli_query($mysqli, "SELECT * FROM producto ORDER BY id DESC");
-$result = mysqli_query($mysqli, "select a.id id, a.nombre nombre, a.precio precio, b.nombre fabricante
-from producto a, fabricante b where a.id_fabricante=b.id ORDER BY id DESC");
+$result = mysqli_query($mysqli, "select a.id id, a.nombre nombre, a.precio precio, a.tipo tipo, b.nombre fabricante
+from producto a, fabricante b where a.id_fabricante=b.id ORDER BY nombre ASC");
 ?>
 
 <!DOCTYPE html>
@@ -50,6 +50,7 @@ from producto a, fabricante b where a.id_fabricante=b.id ORDER BY id DESC");
 			<th>Nombre</th>
 			<th>Precio</th>
 			<th>Fabricante</th>
+			<th>Tipo</th>
 			<th>Acciones</th>
 		</tr>
 	</thead>
@@ -73,6 +74,7 @@ $res["code"] = "23";
 		echo "<td>".$res['nombre']."</td>\n";
 		echo "<td>".$res['precio']."</td>\n";
 		echo "<td>".$res['fabricante']."</td>\n";
+		echo "<td>".$res['tipo']."</td>\n";
 		echo "<td>";
 //En la última columna se añader dos enlaces para editar y modificar el registro correspondiente. Se le pasa por el método GET el id del registro		
 		echo "<a href=\"edit.php?id=$res[id]\">Editar</a>\n";
