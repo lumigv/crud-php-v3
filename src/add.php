@@ -10,7 +10,17 @@ echo "Despues include once\n";
 
 echo "Bloque1\n";
 
+echo $_POST['inserta']."\n";
 
+	$name = mysqli_real_escape_string($mysqli, $_POST['name']);
+	$price = mysqli_real_escape_string($mysqli, $_POST['price']);
+	$code = mysqli_real_escape_string($mysqli, $_POST['code']);
+	$type = mysqli_real_escape_string($mysqli, $_POST['type']);
+
+	echo $name."\n";
+	echo $price."\n";
+	echo $code."\n";
+	echo $type."\n";
 
 if(isset($_POST['inserta'])) 
 {
@@ -19,6 +29,11 @@ if(isset($_POST['inserta']))
 	$price = mysqli_real_escape_string($mysqli, $_POST['price']);
 	$code = mysqli_real_escape_string($mysqli, $_POST['code']);
 	$type = mysqli_real_escape_string($mysqli, $_POST['type']);
+
+	echo $name."\n";
+	echo $price."\n";
+	echo $code."\n";
+	echo $type."\n";
 
 	echo "Bloque2\n";	
 	if(empty($name) || empty($code) || empty($price) || empty($type)) 
@@ -56,6 +71,8 @@ if(isset($_POST['inserta']))
 }
 ?>
 
+<!-- Recuerda que lo que viene a continuación tiene que ir en un sino-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -84,32 +101,33 @@ if(isset($_POST['inserta']))
 <!--Formulario de alta. 
 Al hacer click en el botón Agregar, llama a la página: add.php-->
 	<form action="add.php" method="post">
-		<div><p>
+		<div>
 			<label for="name">Nombre</label>
 			<!--placeholder es como una pista del valor a introducir-->
 			<input type="text" name="name" id="name" placeholder="nombre" required>
-		</p></div>
+		</div>
 
-		<div><p>
+		<div>
 			<label for="price">Precio</label>
 			<input type="number" name="price" step="0.01" id="price" placeholder="precio" required>
-		</p><div>
+		<div>
 
-		<div><p>
+		<div>
 			<label for="code">Fabricante</label>
 			<!--<input type="number" name="code" id="code" placeholder="fabricante" required>-->
 			<?php 
-			$result = mysqli_query($mysqli, "select id, nombre from fabricante ORDER BY id DESC");
+			$result = mysqli_query($mysqli, "select id, nombre from fabricante ORDER BY nombre");
 			?>
 			<select name="code" id="code" placeholder="fabricante" required>
-        	<option value="">Fabricante</option>
+        	<!--<option value="">Fabricante</option>-->
+			<option value=""></option>
              <?php //Cargar los niveles en el combo
         		while($row = mysqli_fetch_array($result)) {
                	   printf("<option value=%s>%s</option>",$row['id'],$row['nombre']);
           		}?>
        		</select>
-		</p></div>
-		<div><p>
+		</div>
+		<div>
 			<?php 
 			
 			$tipos = [	"ALM"=>"Almacenamiento",
@@ -120,37 +138,39 @@ Al hacer click en el botón Agregar, llama a la página: add.php-->
 			"SAL"=>"Salida"
 			];
 			//Seleccionamos el tipo de hardware a través de un botón de opción
-			/*foreach ($tipos as $key=>$value)
+			foreach ($tipos as $key=>$value)
 			{
 				//echo("<input type='radio' name='boton' value='$value'>");
-				printf("<input type=\"radio\" name=\"type\" value=\"%s\" id=\"%s\">",$key, $key);
-				printf("<label for=\"%s\">%s</label>",$key,$value);
-			}*/
+				/*printf("<input type=\"radio\" name=\"type\" value=\"%s\" id=\"%s\">",$key, $key);
+				printf("<label for=\"%s\">%s</label>",$key,$value);*/
+				printf("<input type=\"radio\" name=\"type\" value=\"%s\">",$key, $key);
+				printf("%s", $value);
+			}
 			//Seleccionamos el tipo de hardware a través de una lista desplegable
 			?>
-			<label for="type">Tipo</label>
-			<select name="type" id="type" placeholder="tipo" required>
-        	<option value="">Tipo</option>
+			<!--<label for="type">Tipo</label>
+			<select name="type" id="type" placeholder="tipo" required>-->
+        	<!--<option value="">Tipo</option>
+			<option value=""></option>-->
              <?php //Cargar los niveles en el combo
-	       		foreach ($tipos as $key=>$value) {
+	       		/*foreach ($tipos as $key=>$value) {
                	   printf("<option value=%s>%s</option>",$key,$value);
-          		}?>
-       		</select>
+          		}*/?>
+       		<!--</select>-->
 
 
 			
 
 		
-
-		</p></div>
+		</div>
 		<div>
 			<input type="submit" name="inserta" value="Agregar">
-			<input type="button" value="Cancelar" onclick="location.href='index.php'">
+			<!--<input type="button" value="Cancelar" onclick="location.href='index.php'">-->
 		</div>
 	</form>
 	</main>	
 	<footer>
-	Created by the IES Miguel Herrero team &copy; 2024
+	<!--Created by the IES Miguel Herrero team &copy; 2024-->
   	</footer>
 </div>
 </body>

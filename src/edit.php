@@ -98,17 +98,17 @@ echo $code."\n";
 <!--Formulario de edición. 
 Al hacer click en el botón Guardar, llama a esta misma página: edit.php-->
 	<form action="edit.php" method="post">
-		<div><p>
+		<div>
 			<label for="name">Nombre</label>
 			<input type="text" name="name" id="name" value="<?php echo $name;?>" required>
-		</p></div>
+		</div>
 
-		<div><p>
+		<div>
 			<label for="price">Precio</label>
 			<input type="number" name="price" id="price" step="0.01" value="<?php echo $price;?>" required>
-		</p></div>
+		</div>
 
-		<div><p>
+		<div>
 			<label for="code">Fabricante</label>
 			<!--<input type="number" name="code" id="code" value="<?php echo $code;?>" required>-->
 			<?php
@@ -125,9 +125,10 @@ Al hacer click en el botón Guardar, llama a esta misma página: edit.php-->
                      	printf("<option value=%s>%s</option>",$row['id'],$row['nombre']);
           		}?>
        		</select>
-		</p></div>
+		</div>
 
-		<div><p>
+		<div>
+		    
 			<?php 
 			
 			$tipos = [	"ALM"=>"Almacenamiento",
@@ -146,35 +147,37 @@ Al hacer click en el botón Guardar, llama a esta misma página: edit.php-->
 					//printf("<input type=\"radio\" name=\"type\" value=\"%s\" id=\"%s\" checked>",$key, $key);
 				else
 					//echo "hola2\n";
-				    echo("<input type='radio' name='type' value='$key' id='$key' checked>");
+				    echo("<input type='radio' name='type' value='$key' id='$key'>");
 					//printf("<input type=\"radio\" name=\"type\" value=\"%s\" id=\"%s\">",$key, $key);
-				printf("<label for=\"%s\">%s</label>",$key,$value);
+				//printf("<label for=\"%s\">%s</label>",$key,$value);
+				echo($value);
 			}
 			//Seleccionamos el tipo de hardware a través de una lista desplegable
 			?>
 			<!--Seleccionamos el hardware a través de una lista desplegable-->
 			<!--<label for="type">Tipo</label>
-			<select name="type" id="type" placeholder="tipo" required>
-        	<option value="">Tipo</option>-->
+			<select name="type" id="type" placeholder="tipo" required>-->
+        	<!--<option value="">Tipo</option>-->
              <?php //Cargar los niveles en el combo
         		/*foreach ($tipos as $key=>$value) {
 					if ($type==$key)
                     	printf("<option selected value=%s>%s</option>",$key,$value);
+						//printf("<option selected value=%s>%s</option>",$key,$key);
                         else
                      	printf("<option value=%s>%s</option>",$key,$value);
           		} */?>
        		<!--</select>-->
-		<p></div>
+		</div>
 		<div >
 			<input type="hidden" name="id" value=<?php echo $id;?>>
 			<input type="submit" name="modifica" value="Guardar">
-			<input type="button" value="Cancelar" onclick="location.href='index.php'">
+			<!--<input type="button" value="Cancelar" onclick="location.href='index.php'">-->
 		</div>
 	</form>
 
 	</main>	
 	<footer>
-	Created by the IES Miguel Herrero team &copy; 2024
+	<!--Created by the IES Miguel Herrero team &copy; 2024-->
   	</footer>
 </div>
 </body>

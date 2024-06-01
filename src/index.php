@@ -13,7 +13,7 @@ include_once("config.php");
 
 //$result = mysqli_query($mysqli, "SELECT * FROM producto ORDER BY id DESC");
 $result = mysqli_query($mysqli, "select a.id id, a.nombre nombre, a.precio precio, a.tipo tipo, b.nombre fabricante
-from producto a, fabricante b where a.id_fabricante=b.id ORDER BY nombre ASC");
+from producto a, fabricante b where a.id_fabricante=b.id ORDER BY nombre");
 ?>
 
 <!DOCTYPE html>
@@ -43,7 +43,7 @@ from producto a, fabricante b where a.id_fabricante=b.id ORDER BY nombre ASC");
 		<li><a href="index.php">Inicio</a></li>
 		<li><a href="add.php">Alta</a></li>
 	</ul>
-	<h2>Listado de productos</h2>
+	<!--<h2>Listado de productos</h2>-->
 	<table border="1">
 	<thead>
 		<tr>
@@ -77,7 +77,7 @@ from producto a, fabricante b where a.id_fabricante=b.id ORDER BY nombre ASC");
 	</table>
 	</main>
 	<footer>
-    Created by the IES Miguel Herrero team &copy; 2024
+    <!--Created by the IES Miguel Herrero team &copy; 2024-->
   	</footer>
 </div>
 </body>
