@@ -38,7 +38,7 @@ if(isset($_POST['modifica'])) {
 
 echo "Bloque2\n";
 
-$result = mysqli_query($mysqli, "UPDATE producto SET nombre = '$name', precio = '$price',  tipo = '$type', id_fabricante = '$code' WHERE `id` = $id");
+$result = mysqli_query($mysqli, "UPDATE producto SET nombre = '$name', precio = '$price',  tipo = '$type', id_fabricante = '$code' WHERE id = $id");
 mysqli_close($mysqli);
 
 echo "Bloque3\n";
@@ -117,8 +117,8 @@ Al hacer click en el botón Guardar, llama a esta misma página: edit.php-->
       		<select name="code" id="code" placeholder="fabricante" required>
        		 	<?php   //Cargar los niveles en el combo
         		while($row = mysqli_fetch_array($result)) {
-					echo $code."\n";
-					echo $row['id'].$row['nombre']."\n";
+					//echo $code."\n";
+					//echo $row['id'].$row['nombre']."\n";
 					if ($code==$row['id'])
                     	printf("<option selected value=%s>%s</option>",$row['id'],$row['nombre']);
                         else
@@ -149,23 +149,23 @@ Al hacer click en el botón Guardar, llama a esta misma página: edit.php-->
 					//echo "hola2\n";
 				    echo("<input type='radio' name='type' value='$key' id='$key'>");
 					//printf("<input type=\"radio\" name=\"type\" value=\"%s\" id=\"%s\">",$key, $key);
-				//printf("<label for=\"%s\">%s</label>",$key,$value);
-				echo($value);
+				printf("<label for=\"%s\">%s</label>",$key,$value);
+				/*echo($value);
 			}
 			//Seleccionamos el tipo de hardware a través de una lista desplegable
 			?>
-			<!--Seleccionamos el hardware a través de una lista desplegable-->
-			<!--<label for="type">Tipo</label>
-			<select name="type" id="type" placeholder="tipo" required>-->
+			<!--Seleccionamos el hardware a través de una lista desplegable
+			<label for="type">Tipo</label>-->
+			<!--<select name="type" id="type" placeholder="tipo" required>-->
         	<!--<option value="">Tipo</option>-->
              <?php //Cargar los niveles en el combo
         		/*foreach ($tipos as $key=>$value) {
-					if ($type==$key)
-                    	printf("<option selected value=%s>%s</option>",$key,$value);
-						//printf("<option selected value=%s>%s</option>",$key,$key);
+					if ($type==$key)*/
+                    	//printf("<option selected value=%s>%s</option>",$key,$value);
+						/*printf("<option selected value=%s>%s</option>",$key,$value);
                         else
-                     	printf("<option value=%s>%s</option>",$key,$value);
-          		} */?>
+                     	printf("<option value=%s>%s</option>",$key,$value);*/
+          		} ?>
        		<!--</select>-->
 		</div>
 		<div >

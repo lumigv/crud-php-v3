@@ -4,7 +4,7 @@ services:
   apache:
     build: ./apache
     ports: 
-      - 80:80
+      - 81:80
     environment: 
       - DB_HOST=mariadb
       - DB_NAME=${MARIADB_DATABASE}
@@ -18,7 +18,7 @@ services:
   mariadb:
     image: mariadb
     ports:
-      - 3306:3306
+      - 3307:3306
     environment: 
       - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
       - MARIADB_DATABASE=${MARIADB_DATABASE}
@@ -33,7 +33,7 @@ services:
   phpmyadmin:
     image: phpmyadmin
     ports:
-      - 8080:80
+      - 8081:80
     environment:
       - PMA_HOST=mariadb
     depends_on: 
