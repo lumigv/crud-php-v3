@@ -12,6 +12,11 @@ echo "Bloque1\n";
 
 echo $_POST['inserta']."\n";
 
+	/*$name = mysqli_real_escape_string($mysqli, $_REQUEST['name']);
+	$price = mysqli_real_escape_string($mysqli, $_REQUEST['price']);
+	$code = mysqli_real_escape_string($mysqli, $_REQUEST['code']);
+	$type = mysqli_real_escape_string($mysqli, $_REQUEST['type']);*/
+
 	$name = mysqli_real_escape_string($mysqli, $_POST['name']);
 	$price = mysqli_real_escape_string($mysqli, $_POST['price']);
 	$code = mysqli_real_escape_string($mysqli, $_POST['code']);
@@ -23,12 +28,18 @@ echo $_POST['inserta']."\n";
 	echo $type."\n";
 
 if(isset($_POST['inserta'])) 
+//if(isset($_REQUEST['inserta'])) 
 {
 //Obtiene los datos (name, price y code) a partir del formulario de alta por el método POST (Se envía a través del body del HTTP Request. No aparece en la URL)
 	$name = mysqli_real_escape_string($mysqli, $_POST['name']);
 	$price = mysqli_real_escape_string($mysqli, $_POST['price']);
 	$code = mysqli_real_escape_string($mysqli, $_POST['code']);
 	$type = mysqli_real_escape_string($mysqli, $_POST['type']);
+
+	/*$name = mysqli_real_escape_string($mysqli, $_REQUEST['name']);
+	$price = mysqli_real_escape_string($mysqli, $_REQUEST['price']);
+	$code = mysqli_real_escape_string($mysqli, $_REQUEST['code']);
+	$type = mysqli_real_escape_string($mysqli, $_REQUEST['type']);*/
 
 	echo $name."\n";
 	echo $price."\n";
@@ -59,7 +70,7 @@ if(isset($_POST['inserta']))
 	else 
 	{
 //Prepara una sentencia SQL para su ejecución. En este caso el alta de un registro de la BD.	
-		$result = mysqli_query($mysqli, "INSERT INTO producto (nombre, precio, tipo, id_fabricante) VALUES ('$name', '$price', '$type','$code')");	
+		$result = mysqli_query($mysqli, "INSERT INTO producto (nombre, precio, tipo, id_fabricante) VALUES ('$name', $price, '$type','$code')");	
 	
 		echo "Bloque3\n";
 		echo "<div>Datos añadidos correctamente</div>";
@@ -101,6 +112,7 @@ if(isset($_POST['inserta']))
 <!--Formulario de alta. 
 Al hacer click en el botón Agregar, llama a la página: add.php-->
 	<form action="add.php" method="post">
+	<!--<form action="add.php" method="get">	-->
 		<div>
 			<label for="name">Nombre</label>
 			<!--placeholder es como una pista del valor a introducir-->
